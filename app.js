@@ -3,22 +3,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var nodemailer =require('nodemailer');
 
-require('dotenv').config();
 var session = require('express-session');
+
 
 // Importar los routers
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var sesionRouter = require('./routes/sesion');
 var sesionadminRouter = require('./routes/admin/sesion');
-
 var emailRouter = require('./routes/email');
+//var emailadminRouter = require('./routes/admin/emailadmin')
 var galeriaRouter = require('./routes/galeria');
 
-// var loginRouter = require('./routes/admin/login');
-
 var app = express();
+
 
 app.use(session({
   secret: '12345678',
@@ -28,15 +28,15 @@ app.use(session({
 }))
 
 //secured = async (req, res, next) => {
-//  try{
- //   console.log(req.session.id_usuario);
- //   if(req.session.id_usuario) {
- //     next();
- //   } else {
- //     res.redirect('/admin/sesion')
- //   }
+ //try{
+   // console.log(req.session.id_usuario);
+   // if(req.session.id_usuario) {
+   //  next();
+   // } else {
+   //  res.redirect('/admin/sesion')
+   // }
  // }catch (error) {
- //   console.log(error);
+  // console.log(error);
  // }
 //}
 
@@ -44,7 +44,7 @@ app.use(session({
 
 
 // Configuración del motor de vistas
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'hbs');
 
 // Middleware de la aplicación
@@ -54,14 +54,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // Definir las rutas
 app.use('/', indexRouter);
+app.use('/sesion', sesionRouter);
 app.use('/routes/users', usersRouter);
-app.use('/sesion/admin/sesion', sesionRouter);
+app.use('/sesion/admin/sesion', sesionadminRouter);
 app.use('/email', emailRouter);
 app.use('/galeria', galeriaRouter);
-app.use('/admin/sesion', sesionRouter);
-// app.use('/admin/login', loginRouter);
+app.use(express.static(path.join(__dirname, '/sesion')));
+//app.use('images',imagesRouter);
+
+
+//app.use('/admin/emailadmin', emailadminRouter);
+
+
+
 
 
 // Manejo de errores 404

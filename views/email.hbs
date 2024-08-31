@@ -24,17 +24,19 @@
   <div class="contemail">
 
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">Escribi tu Email</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+      <form action="/email" method="post">
+      <label for="nombre" class="form-label">Escribi tu Email</label>
+      <input type="text"  name="nombre"  class="form-control"  placeholder="dejanos tu Correo">
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Escribime!</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-
-      <input type="submit" value="enviar" class="form__cta">
+      <label for="mensaje" class="form-label">Escribime!</label>
+      <textarea name="mensaje" class="form-control"  rows="3"></textarea>
+     <p> <input type="submit" value="enviar" class="form__cta"></p>
       <br>
+    </form>  
     </div>
   </div>
+  {{ message }}
   <br>
   <br>
 
